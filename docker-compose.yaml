@@ -41,7 +41,7 @@ services:
       - front-tier
       - back-tier
     depends_on:
-      - postgres
+      - db
     environment:
       - PORT=4000
     #healthcheck:
@@ -74,7 +74,7 @@ services:
       - back-tier
     depends_on:
       - redis
-      - postgres
+      - db
     #healthcheck:
     #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
     #  interval: 30s
@@ -94,7 +94,7 @@ services:
       interval: 30s
       retries: 3
 
-  postgres:
+  db:
     build:
       context: .
       dockerfile: ./Dockerfile.postgres
