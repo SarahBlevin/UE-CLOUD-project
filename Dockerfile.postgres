@@ -13,4 +13,7 @@ VOLUME [/var/lib/postgresql/data]
 
 CMD ["postgres"]
 #docker volume create db-data
+# docker build -t postgres-service -f Dockerfile.postgres .
+
+#Avoid hardcoding credentials: If someone accesses your Docker image, they can see these credentials. Instead, pass them as environment variables when running the container:
 #docker run -d --name postgres-service -v db-data:/var/lib/postgresql/data -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb postgres-service

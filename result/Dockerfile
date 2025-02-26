@@ -2,15 +2,19 @@ FROM node:18-slim
 
 WORKDIR /usr/local/app
 
-COPY package*.json .
+# first copy packages to leverage layers cache
+COPY package.json package-lock.json ./
 
-#install nodemon with npm install -g nodemon
+# one layer for all npm commands
 RUN npm install -g nodemon &&\
     npm ci &&\
     npm cache clean --force
+
+# now we copy the rest 
+COPY . .
 
 RUN mv /usr/local/app/node_modules /node_modules
 
 ENV PORT=4000
 
-CMD ["node server.js"]
+RUN node server.js
