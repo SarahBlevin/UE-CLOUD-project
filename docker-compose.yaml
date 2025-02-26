@@ -1,0 +1,138 @@
+services:
+  vote:
+    build:
+      context: ./vote
+      dockerfile: ./Dockerfile
+    networks:
+      - front-tier
+      - back-tier
+    depends_on:
+      - redis
+    environment:
+      - FLASK_RUN_HOST=0.0.0.0
+      - PORT=5000
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+    #  interval: 30s
+    #  retries: 3
+
+  #vote2:
+  #  build:
+  #    context: ./vote
+  #    dockerfile: ./Dockerfile
+  #  networks:
+  #    - front-tier
+  #    - back-tier
+  #  depends_on:
+  #    - redis
+  #  environment:
+  #    - FLASK_RUN_HOST=0.0.0.1
+  #    - PORT=5000
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+    #  interval: 30s
+    #  retries: 3
+
+  result:
+    build:
+      context: ./result
+      dockerfile: ./Dockerfile
+    networks:
+      - front-tier
+      - back-tier
+    depends_on:
+      - postgres
+    environment:
+      - PORT=4000
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+    #  interval: 30s
+    #  retries: 3
+
+  seed:
+    build:
+      context: ./seed-data
+      dockerfile: ./Dockerfile
+    networks:
+      - front-tier
+    depends_on:
+      - vote
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+    #  interval: 30s
+    #  retries: 3
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: ./Dockerfile
+      args:
+        TARGETPLATFORM: linux/amd64
+        TARGETARCH: amd64
+        BUILDPLATFORM: linux/amd64
+    networks:
+      - back-tier
+    depends_on:
+      - redis
+      - postgres
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+    #  interval: 30s
+    #  retries: 3
+
+  redis:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.redis
+    networks:
+      - back-tier
+    volumes:
+      - redis-data:/data
+      - ./healthchecks:/healthchecks
+    healthcheck:
+      test: ["CMD", "/healthchecks/redis.sh"]
+      interval: 30s
+      retries: 3
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.postgres
+    networks:
+      - back-tier
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./healthchecks:/healthchecks
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD", "/healthchecks/postgres.sh"]
+      interval: 10s
+      retries: 5
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
+    networks:
+      - front-tier
+    depends_on:
+      - vote
+      - result
+    ports:
+      - "80:80"
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost/health"]
+    #  interval: 30s
+    #  retries: 3
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
+
+volumes:
+  redis-data:
+  db-data:
