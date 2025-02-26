@@ -44,6 +44,8 @@ services:
       - db
     environment:
       - PORT=4000
+    ports:
+      - "4000:4000"
     #healthcheck:
     #  test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
     #  interval: 30s
@@ -57,6 +59,7 @@ services:
       - front-tier
     depends_on:
       - vote
+      - nginx
     #healthcheck:
     #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
     #  interval: 30s
@@ -119,7 +122,7 @@ services:
       - front-tier
     depends_on:
       - vote
-      - result
+      #- result
     ports:
       - "80:80"
     #healthcheck:
