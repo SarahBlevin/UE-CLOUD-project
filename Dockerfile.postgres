@@ -1,0 +1,16 @@
+FROM postgres:15-alpine
+
+WORKDIR /docker-entrypoint-initdb.d
+
+COPY healthchecks/postgres.sh /usr/local/bin/postgres.sh
+RUN chmod +x /usr/local/bin/postgres.sh
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=5 CMD ["sh", "/usr/local/bin/postgres.sh"]
+
+EXPOSE 5432
+
+VOLUME [/var/lib/postgresql/data]
+
+CMD ["postgres"]
+#docker volume create db-data
+#docker run -d --name postgres-service -v db-data:/var/lib/postgresql/data -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb postgres-service
