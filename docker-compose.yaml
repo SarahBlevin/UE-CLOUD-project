@@ -16,18 +16,18 @@ services:
     #  interval: 30s
     #  retries: 3
 
-  #vote2:
-  #  build:
-  #    context: ./vote
-  #    dockerfile: ./Dockerfile
-  #  networks:
-  #    - front-tier
-  #    - back-tier
-  #  depends_on:
-  #    - redis
-  #  environment:
-  #    - FLASK_RUN_HOST=0.0.0.0
-  #    - PORT=5000
+  vote2:
+    build:
+      context: ./vote
+      dockerfile: ./Dockerfile
+    networks:
+      - front-tier
+      - back-tier
+    depends_on:
+      - redis
+    environment:
+      - FLASK_RUN_HOST=0.0.0.0
+      - PORT=5001
     #healthcheck:
     #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
     #  interval: 30s
