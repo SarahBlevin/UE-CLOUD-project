@@ -26,7 +26,7 @@ services:
   #  depends_on:
   #    - redis
   #  environment:
-  #    - FLASK_RUN_HOST=0.0.0.1
+  #    - FLASK_RUN_HOST=0.0.0.0
   #    - PORT=5000
     #healthcheck:
     #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
