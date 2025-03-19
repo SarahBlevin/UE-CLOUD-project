@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seed
+spec:
+  template:
+    metadata:
+      labels:
+        app: seed
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: seed
+          image: europe-west9-docker.pkg.dev/tuto-kube/voting-image/seed
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "Seeding data..";
+              sleep 5;
+              echo "Data seeded";
