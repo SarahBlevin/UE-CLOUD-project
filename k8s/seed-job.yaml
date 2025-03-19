@@ -11,10 +11,9 @@ spec:
       restartPolicy: Never
       containers:
         - name: seed
-          image: europe-west9-docker.pkg.dev/tuto-kube/voting-image/seed
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              echo "Seeding data..";
-              sleep 5;
-              echo "Data seeded";
+          image: eloip13009/seed-data
+          env:
+            - name: TARGET_HOST
+              value: "vote"
+            - name: TARGET_PORT
+              value: "5000"
