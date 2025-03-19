@@ -1,0 +1,5 @@
+terraform/.terraform.*
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/tuto-kube-1bfc2425a595.json 

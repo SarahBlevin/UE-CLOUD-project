@@ -1,0 +1,5 @@
+project_id       = "tuto-kube"
+region           = "europe-west9"
+zone             = "europe-west9-a"
+gke_cluster_name = "my-cluster"
+gce_disk_name    = "db-disk"
