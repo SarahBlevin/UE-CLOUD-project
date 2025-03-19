@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: result
+      labels:
+        app: result
+    spec:
+      containers:
+      - image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/result
+        name: result
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+  selector:
+    matchLabels:
+      app: result
