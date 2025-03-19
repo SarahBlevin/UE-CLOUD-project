@@ -1,5 +1,6 @@
 services:
   vote:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: ./vote
       dockerfile: ./Dockerfile
@@ -17,6 +18,7 @@ services:
     #  retries: 3
 
   vote2:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: ./vote
       dockerfile: ./Dockerfile
@@ -34,6 +36,7 @@ services:
     #  retries: 3
 
   result:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: ./result
       dockerfile: ./Dockerfile
@@ -52,6 +55,7 @@ services:
     #  retries: 3
 
   seed:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: ./seed-data
       dockerfile: ./Dockerfile
@@ -66,6 +70,7 @@ services:
     #  retries: 3
 
   worker:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: ./worker
       dockerfile: ./Dockerfile
@@ -84,6 +89,7 @@ services:
     #  retries: 3
 
   redis:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: .
       dockerfile: ./Dockerfile.redis
@@ -98,6 +104,7 @@ services:
       retries: 3
 
   db:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: .
       dockerfile: ./Dockerfile.postgres
@@ -115,6 +122,7 @@ services:
       retries: 5
 
   nginx:
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
     build:
       context: ./nginx
       dockerfile: ./Dockerfile
