@@ -1,0 +1,5 @@
+project_id       = "login-ue-cloud-k8s"
+region           = "europe-west9"
+zone             = "europe-west9-a"
+gke_cluster_name = "ue-cloud-project"
+gce_disk_name    = "db-disk"
