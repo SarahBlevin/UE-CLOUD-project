@@ -1,6 +1,6 @@
 services:
   vote:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/vote
     build:
       context: ./vote
       dockerfile: ./Dockerfile
@@ -18,7 +18,7 @@ services:
     #  retries: 3
 
   vote2:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/vote2
     build:
       context: ./vote
       dockerfile: ./Dockerfile
@@ -36,7 +36,7 @@ services:
     #  retries: 3
 
   result:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/result
     build:
       context: ./result
       dockerfile: ./Dockerfile
@@ -55,7 +55,7 @@ services:
     #  retries: 3
 
   seed:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/seed
     build:
       context: ./seed-data
       dockerfile: ./Dockerfile
@@ -70,7 +70,7 @@ services:
     #  retries: 3
 
   worker:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/worker
     build:
       context: ./worker
       dockerfile: ./Dockerfile
@@ -89,7 +89,7 @@ services:
     #  retries: 3
 
   redis:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/redis
     build:
       context: .
       dockerfile: ./Dockerfile.redis
@@ -104,7 +104,7 @@ services:
       retries: 3
 
   db:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/db
     build:
       context: .
       dockerfile: ./Dockerfile.postgres
@@ -122,7 +122,7 @@ services:
       retries: 5
 
   nginx:
-    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image
+    image: europe-west9-docker.pkg.dev/login-ue-cloud-k8s/voting-image/nginx
     build:
       context: ./nginx
       dockerfile: ./Dockerfile
