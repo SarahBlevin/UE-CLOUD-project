@@ -11,5 +11,5 @@ provider "google" {
   project     = var.project_id
   region      = var.region
   zone        = var.zone
-  credentials = file("tuto-kube-1bfc2425a595.json")
+  credentials = file("login-ue-cloud-k8s-37ea8ef37caf.json")
 }
