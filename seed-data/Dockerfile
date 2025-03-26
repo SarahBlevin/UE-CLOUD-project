@@ -10,6 +10,7 @@ RUN apt-get install -y apache2-utils dos2unix
 
 COPY make-data.py generate-votes.sh ./
 
+#fix endlines and grant execution permission
 RUN dos2unix generate-votes.sh && chmod +x generate-votes.sh
 
 #RUN python make-data.py

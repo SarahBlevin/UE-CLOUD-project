@@ -10,12 +10,8 @@ services:
     depends_on:
       - redis
     environment:
-      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_HOST=0.0.0.0 #to make flask app listen outside container
       - PORT=5000
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-    #  interval: 30s
-    #  retries: 3
 
   vote2:
     image: europe-west9-docker.pkg.dev/tuto-kube/voting-image/vote2
@@ -30,10 +26,6 @@ services:
     environment:
       - FLASK_RUN_HOST=0.0.0.0
       - PORT=5001
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-    #  interval: 30s
-    #  retries: 3
 
   result:
     image: europe-west9-docker.pkg.dev/tuto-kube/voting-image/result
@@ -49,10 +41,6 @@ services:
       - PORT=4000
     ports:
       - "4000:4000"
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-    #  interval: 30s
-    #  retries: 3
 
   seed:
     image: europe-west9-docker.pkg.dev/tuto-kube/voting-image/seed
@@ -64,10 +52,6 @@ services:
     depends_on:
       - vote
       - nginx
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-    #  interval: 30s
-    #  retries: 3
 
   worker:
     image: europe-west9-docker.pkg.dev/tuto-kube/voting-image/worker
@@ -83,10 +67,6 @@ services:
     depends_on:
       - redis
       - db
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-    #  interval: 30s
-    #  retries: 3
 
   redis:
     image: europe-west9-docker.pkg.dev/tuto-kube/voting-image/redis
@@ -97,7 +77,7 @@ services:
       - back-tier
     volumes:
       - redis-data:/data
-      - ./healthchecks:/healthchecks
+      - ./healthchecks:/healthchecks #service specific
     healthcheck:
       test: ["CMD", "/healthchecks/redis.sh"]
       interval: 30s
@@ -133,17 +113,13 @@ services:
       #- result
     ports:
       - "80:80"
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost/health"]
-    #  interval: 30s
-    #  retries: 3
 
 networks:
   front-tier:
-    driver: bridge
+    driver: bridge #default docker network driver: creates an isolated network
   back-tier:
     driver: bridge
 
-volumes:
+volumes: #named volumes
   redis-data:
   db-data:
